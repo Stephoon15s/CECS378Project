@@ -81,6 +81,7 @@ def create_app(test_config=None):
         rows = get_db().execute("SELECT * FROM clubs ORDER BY name").fetchall()
         return render_template("clubs.html", clubs=rows)
 
+    #FIX ME: INJECTION FLAW HERE: 
     @app.get("/clubs/search")
     def search_clubs():
         q = request.args.get("q", "")
