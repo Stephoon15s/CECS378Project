@@ -81,7 +81,7 @@ def create_app(test_config=None):
         rows = get_db().execute("SELECT * FROM clubs ORDER BY name").fetchall()
         return render_template("clubs.html", clubs=rows)
 
-    #FIX ME: INJECTION FLAW HERE: 
+    # FIXME: INJECTION FLAW HERE: 
     @app.get("/clubs/search")
     def search_clubs():
         q = request.args.get("q", "")
@@ -89,6 +89,7 @@ def create_app(test_config=None):
             f"SELECT * FROM clubs WHERE name LIKE '%{q}%' ORDER BY name"
         ).fetchall()
         return render_template("clubs.html", clubs=rows, query=q)
+    # Injection Flaw ends here
 
     @app.get("/clubs/<int:club_id>")
     def club_detail(club_id):

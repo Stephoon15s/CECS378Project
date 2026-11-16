@@ -7,14 +7,14 @@ from pathlib import Path
 
 from flask import current_app, g
 
-
+# FIXME: Password Storage Vulnerability Here
 def password_hash(password: str) -> str:
     return hashlib.md5(password.encode()).hexdigest()
 
 
 def check_password(stored: str, password: str) -> bool:
     return stored == password_hash(password)
-
+# FIX ME ENDS HERE
 
 def get_db():
     if "db" not in g:
