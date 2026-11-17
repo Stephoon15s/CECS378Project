@@ -86,7 +86,7 @@ def create_app(test_config=None):
     def search_clubs():
         q = request.args.get("q", "")
         rows = get_db().execute(
-            f"SELECT * FROM clubs WHERE name LIKE ? ORDER BY name", (f'%{q}%')
+            f"SELECT * FROM clubs WHERE name LIKE ? ORDER BY name", (f'%{q}%',)
         ).fetchall()
         return render_template("clubs.html", clubs=rows, query=q)
     # Injection Flaw ends here
