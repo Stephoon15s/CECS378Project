@@ -91,6 +91,7 @@ def create_app(test_config=None):
         return render_template("clubs.html", clubs=rows, query=q)
     # Injection Flaw ends here
 
+    # XXS Flaw Here
     @app.get("/clubs/<int:club_id>")
     def club_detail(club_id):
         club = get_db().execute("SELECT * FROM clubs WHERE id = ?", (club_id,)).fetchone()
