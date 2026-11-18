@@ -131,6 +131,10 @@ def create_app(test_config=None):
     @app.get("/api/members/<int:club_id>")
     @login_required
     def members_api(club_id):
+        # G3 fix (CWE-862 / OWASP A01 Broken Access Control): the roster is member data,
+        # so only admins and members of this club (including its officers) may read it.
+        if g.user["role"] != "admin" and club_role(club_id) is None:
+           abort(403)
         rows = get_db().execute(
             """SELECT u.id, u.display_name, u.email, u.date_of_birth, m.club_role
                FROM memberships m JOIN users u ON u.id = m.user_id
